@@ -19,7 +19,7 @@ import { basename, dirname, join, relative } from 'node:path';
 const root = join(dirname(new URL(import.meta.url).pathname), '..');
 const sourceFolders = ['src', 'docs'];
 const sourceFiles = ['README.md'];
-const textExtensions = /\.(abap|xml|json|md)$/;
+const textExtensions = /\.(abap|xml|json|md|svg)$/;
 
 // Name length limits of SAP objects; transparent tables are checked separately (16 characters)
 const lengthLimits = { clas: 30, intf: 30, prog: 40, msag: 20, tabl: 30, ttyp: 30, dtel: 30, doma: 30, devc: 30 };
