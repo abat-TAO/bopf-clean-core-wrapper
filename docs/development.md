@@ -76,16 +76,8 @@ group; a save refused in `check_before_save` is covered by the unit tests of `ZC
 
 ## Facades
 
-Run `ZBFW_FACADE_GENERATOR` and enter an existing facade class: the report loads the business object, the package
-and the selection from the facade (`get_selection`). Change the selection and run the report; it replaces the class
-only if the generator wrote it, and activates it.
-
-- Entries are `NAME` or `NODE.NAME`, optionally `= alias`. An alias replaces the generated name after the prefix
-  (`read_`, `query_`, `execute_`, ...), e.g. the association `ROOT.ITEM = items` becomes `read_items`.
-- Method names have at most 30 characters. Give longer names an alias, e.g. the action
-  `ROOT.CALC_TRANSPORTATION_CHARGES = calc_charges` becomes `execute_calc_charges`. Entries chosen with F4 have no
-  alias.
-- The class builder sorts methods and parameters alphabetically.
+How to use `ZBFW_FACADE_GENERATOR` (selection screen, entries and aliases, naming, regeneration, error messages) is
+described in the [facade generator tutorial](facade-generator.md).
 
 To update the demo facade, regenerate `ZCL_BFW_DEMO_SO_FACADE` in a system with the BOPF demo and take the class over
 unchanged into `src/demo/`.

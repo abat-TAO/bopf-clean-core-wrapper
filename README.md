@@ -17,6 +17,8 @@ two parts:
   select, e.g. `read_root( keys )` returning the node's own table type. The facade holds no logic; after an upgrade
   you generate it again.
 
+![Engine and facade generator: at design time the report generates a typed facade from the BOPF configuration; at runtime your code calls the facade, the facade calls the engine, and the engine calls the BOPF APIs](docs/images/overview.svg)
+
 > **Status: v1.0.0.** Tested so far on S/4HANA 2025 FPS01 (SAP_BASIS 816) with the SAP TM transportation order
 > `/SCMTMS/TOR`, on ABAP Platform 2025 with the BOPF demo business object `/BOBF/DEMO_SALES_ORDER`, including the
 > RAP demo, and on S/4HANA 2023 FPS01 (SAP_BASIS 758) with the BOPF demo, also including the RAP demo.
@@ -47,7 +49,8 @@ constants interfaces. Not classified, so level C, are only:
    package and, for a transportable package, a request; then select the nodes to read and to change, the
    associations, alternative keys, actions and queries (F4 lists them). Entries are `NAME` or `NODE.NAME`, optionally
    `= alias` as the method name. The report creates and activates the class; it replaces only classes it generated
-   itself. To change a facade, enter its name: the report loads its selection.
+   itself. To change a facade, enter its name: the report loads its selection. Step by step, with two worked
+   examples: [facade generator tutorial](docs/facade-generator.md).
 3. **Call it.** The demo facade `ZCL_BFW_DEMO_SO_FACADE` for `/BOBF/DEMO_SALES_ORDER` is part of the repository:
 
    ```abap

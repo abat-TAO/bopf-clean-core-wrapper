@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 460" width="1000" height="460" role="img" aria-labelledby="title description">
+  <title id="title">Engine and facade generator</title>
+  <desc id="description">At design time, the report ZBFW_FACADE_GENERATOR reads names and types from the BOPF configuration and generates a typed facade class. At runtime, your code calls the facade, the facade calls the generic engine, and the engine and the transactions call the classic BOPF APIs, which serve the business objects.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57606a"/>
+    </marker>
+    <style>
+      .frame { fill: #ffffff; stroke: #d0d7de; }
+      .lane { fill: #f6f8fa; }
+      .lane-label { font: 700 11px "Segoe UI", Helvetica, Arial, sans-serif; letter-spacing: 1.2px; fill: #57606a; }
+      .title { font: 700 17px "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2328; }
+      .subtitle { font: 400 13px "Segoe UI", Helvetica, Arial, sans-serif; fill: #57606a; }
+      .box { fill: #ffffff; stroke-width: 1.5; }
+      .head { font: 700 14px "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2328; }
+      .text { font: 400 12.5px "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2328; }
+      .note { font: 400 11.5px "Segoe UI", Helvetica, Arial, sans-serif; fill: #57606a; }
+      .code { font: 400 11.5px SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; fill: #1f2328; }
+      .edge { stroke: #57606a; stroke-width: 1.5; fill: none; }
+      .dashed { stroke-dasharray: 5 4; }
+      .edge-label { font: 400 11.5px "Segoe UI", Helvetica, Arial, sans-serif; fill: #57606a; }
+    </style>
+  </defs>
+
+  <rect class="frame" x="1" y="1" width="998" height="458" rx="16"/>
+  <text class="title" x="24" y="33">One engine, one generated facade per business object</text>
+  <text class="subtitle" x="976" y="33" text-anchor="end">bopf-clean-core-wrapper</text>
+
+  <!-- Lanes -->
+  <rect class="lane" x="16" y="48" width="968" height="140" rx="10"/>
+  <text class="lane-label" x="30" y="67">DESIGN TIME</text>
+  <rect class="lane" x="16" y="202" width="968" height="242" rx="10"/>
+  <text class="lane-label" x="30" y="221">RUNTIME</text>
+
+  <!-- Design time -->
+  <rect class="box" x="40" y="80" width="150" height="90" rx="8" stroke="#8250df"/>
+  <text class="head" x="115" y="110" text-anchor="middle">Developer</text>
+  <text class="text" x="115" y="132" text-anchor="middle">selects the entries,</text>
+  <text class="text" x="115" y="150" text-anchor="middle">presses F8</text>
+
+  <rect class="box" x="225" y="80" width="170" height="90" rx="8" stroke="#8250df"/>
+  <text class="head" x="310" y="104" text-anchor="middle">Facade generator</text>
+  <text class="code" x="310" y="124" text-anchor="middle">ZBFW_FACADE_GENERATOR</text>
+  <text class="text" x="310" y="144" text-anchor="middle">nodes, associations,</text>
+  <text class="text" x="310" y="161" text-anchor="middle">keys, actions, queries</text>
+
+  <rect class="box" x="430" y="80" width="180" height="90" rx="8" stroke="#8250df"/>
+  <text class="head" x="520" y="104" text-anchor="middle">Metadata</text>
+  <text class="code" x="520" y="124" text-anchor="middle">ZCL_BFW_METADATA</text>
+  <text class="text" x="520" y="144" text-anchor="middle">names and types from</text>
+  <text class="text" x="520" y="161" text-anchor="middle">the BOPF configuration</text>
+
+  <path class="edge" d="M190,125 L223,125" marker-end="url(#arrow)"/>
+  <path class="edge" d="M395,125 L428,125" marker-end="url(#arrow)"/>
+  <path class="edge" d="M610,125 L722,125 L722,243" marker-end="url(#arrow)"/>
+  <text class="edge-label" x="618" y="117">reads</text>
+  <path class="edge" d="M310,170 L310,243" marker-end="url(#arrow)"/>
+  <text class="edge-label" x="318" y="198">generates</text>
+
+  <!-- Runtime -->
+  <rect class="box" x="40" y="245" width="150" height="90" rx="8" stroke="#57606a"/>
+  <text class="head" x="115" y="275" text-anchor="middle">Your code</text>
+  <text class="text" x="115" y="297" text-anchor="middle">reports, jobs,</text>
+  <text class="text" x="115" y="315" text-anchor="middle">RAP handlers</text>
+
+  <rect class="box" x="225" y="245" width="170" height="90" rx="8" stroke="#1a7f37"/>
+  <text class="head" x="310" y="269" text-anchor="middle">Generated facade</text>
+  <text class="code" x="310" y="289" text-anchor="middle">ZCL_..._FACADE</text>
+  <text class="text" x="310" y="309" text-anchor="middle">typed methods,</text>
+  <text class="text" x="310" y="326" text-anchor="middle">no logic</text>
+
+  <rect class="box" x="430" y="245" width="180" height="90" rx="8" stroke="#0969da"/>
+  <text class="head" x="520" y="269" text-anchor="middle">Engine</text>
+  <text class="code" x="520" y="289" text-anchor="middle">ZIF_BFW_BUSINESS_OBJECT</text>
+  <text class="text" x="520" y="309" text-anchor="middle">any classic BOPF BO,</text>
+  <text class="text" x="520" y="326" text-anchor="middle">addressed by name</text>
+
+  <rect class="box" x="430" y="350" width="180" height="70" rx="8" stroke="#0969da"/>
+  <text class="head" x="520" y="376" text-anchor="middle">Transactions</text>
+  <text class="text" x="520" y="398" text-anchor="middle">classic save, RAP saver</text>
+
+  <rect class="box" x="645" y="245" width="155" height="175" rx="8" stroke="#57606a"/>
+  <text class="head" x="722" y="272" text-anchor="middle">BOPF APIs</text>
+  <text class="text" x="722" y="296" text-anchor="middle">service manager</text>
+  <text class="text" x="722" y="316" text-anchor="middle">transaction manager</text>
+  <text class="text" x="722" y="336" text-anchor="middle">configuration</text>
+  <text class="text" x="722" y="356" text-anchor="middle">messages</text>
+  <text class="note" x="722" y="400" text-anchor="middle">Clean Core level B</text>
+
+  <rect class="box" x="835" y="245" width="135" height="175" rx="8" stroke="#bc4c00"/>
+  <text class="head" x="902" y="272" text-anchor="middle">Business objects</text>
+  <text class="code" x="902" y="297" text-anchor="middle">/SCMTMS/TOR</text>
+  <text class="code" x="902" y="317" text-anchor="middle">EHHSS_INCIDENT</text>
+  <text class="code" x="902" y="337" text-anchor="middle">/SRMSMC/BO_SEV</text>
+  <text class="code" x="902" y="357" text-anchor="middle">...</text>
+  <text class="note" x="902" y="400" text-anchor="middle">their types: level C</text>
+
+  <path class="edge" d="M190,290 L223,290" marker-end="url(#arrow)"/>
+  <path class="edge" d="M395,290 L428,290" marker-end="url(#arrow)"/>
+  <path class="edge" d="M610,290 L643,290" marker-end="url(#arrow)"/>
+  <path class="edge" d="M610,385 L643,385" marker-end="url(#arrow)"/>
+  <path class="edge" d="M800,332 L833,332" marker-end="url(#arrow)"/>
+  <path class="edge dashed" d="M115,335 L115,385 L428,385" marker-end="url(#arrow)"/>
+  <text class="edge-label" x="128" y="378">save, or the RAP saver phases</text>
+</svg>
