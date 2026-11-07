@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 460" width="1000" height="460" role="img" aria-labelledby="title description">
   <title id="title">Engine and facade generator</title>
-  <desc id="description">At design time, the report ZBFW_FACADE_GENERATOR reads names and types from the BOPF configuration and generates a typed facade class. At runtime, your code calls the facade, the facade calls the generic engine, and the engine and the transactions call the classic BOPF APIs, which serve the business objects.</desc>
+  <desc id="description">At design time, the report ZBFW_FACADE_GENERATOR reads names and types from the BOPF configuration and generates a typed facade class. At runtime, your code calls the facade and the facade calls the generic engine, which uses the BOPF service manager and configuration per business object; your code saves through the transactions, which use the BOPF transaction manager for the whole transaction. The BOPF APIs serve the business objects.</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#57606a"/>
@@ -12,6 +12,7 @@
       .title { font: 700 17px "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2328; }
       .subtitle { font: 400 13px "Segoe UI", Helvetica, Arial, sans-serif; fill: #57606a; }
       .box { fill: #ffffff; stroke-width: 1.5; }
+      .part { fill: #f6f8fa; stroke: #d0d7de; stroke-width: 1; }
       .head { font: 700 14px "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2328; }
       .text { font: 400 12.5px "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2328; }
       .note { font: 400 11.5px "Segoe UI", Helvetica, Arial, sans-serif; fill: #57606a; }
@@ -80,12 +81,16 @@
   <text class="text" x="520" y="398" text-anchor="middle">classic save, RAP saver</text>
 
   <rect class="box" x="645" y="245" width="155" height="175" rx="8" stroke="#57606a"/>
-  <text class="head" x="722" y="272" text-anchor="middle">BOPF APIs</text>
-  <text class="text" x="722" y="296" text-anchor="middle">service manager</text>
-  <text class="text" x="722" y="316" text-anchor="middle">transaction manager</text>
-  <text class="text" x="722" y="336" text-anchor="middle">configuration</text>
-  <text class="text" x="722" y="356" text-anchor="middle">messages</text>
-  <text class="note" x="722" y="400" text-anchor="middle">Clean Core level B</text>
+  <text class="head" x="722" y="266" text-anchor="middle">BOPF APIs</text>
+  <rect class="part" x="654" y="274" width="137" height="72" rx="5"/>
+  <text class="text" x="722" y="291" text-anchor="middle">service manager,</text>
+  <text class="text" x="722" y="307" text-anchor="middle">configuration,</text>
+  <text class="text" x="722" y="323" text-anchor="middle">messages</text>
+  <text class="note" x="722" y="339" text-anchor="middle">per business object</text>
+  <rect class="part" x="654" y="352" width="137" height="44" rx="5"/>
+  <text class="text" x="722" y="369" text-anchor="middle">transaction manager</text>
+  <text class="note" x="722" y="387" text-anchor="middle">per transaction</text>
+  <text class="note" x="722" y="412" text-anchor="middle">Clean Core level B</text>
 
   <rect class="box" x="835" y="245" width="135" height="175" rx="8" stroke="#bc4c00"/>
   <text class="head" x="902" y="272" text-anchor="middle">Business objects</text>
@@ -97,8 +102,8 @@
 
   <path class="edge" d="M190,290 L223,290" marker-end="url(#arrow)"/>
   <path class="edge" d="M395,290 L428,290" marker-end="url(#arrow)"/>
-  <path class="edge" d="M610,290 L643,290" marker-end="url(#arrow)"/>
-  <path class="edge" d="M610,385 L643,385" marker-end="url(#arrow)"/>
+  <path class="edge" d="M610,300 L652,300" marker-end="url(#arrow)"/>
+  <path class="edge" d="M610,374 L652,374" marker-end="url(#arrow)"/>
   <path class="edge" d="M800,332 L833,332" marker-end="url(#arrow)"/>
   <path class="edge dashed" d="M115,335 L115,385 L428,385" marker-end="url(#arrow)"/>
   <text class="edge-label" x="128" y="378">save, or the RAP saver phases</text>
