@@ -20,8 +20,8 @@ two parts:
 ![Engine and facade generator: at design time the report generates a typed facade from the BOPF configuration; at runtime your code calls the facade, the facade calls the engine, and the engine calls the BOPF APIs](docs/images/overview.svg)
 
 > **Status: v1.0.0.** Tested so far on S/4HANA 2025 FPS01 (SAP_BASIS 816) with the SAP TM transportation order
-> `/SCMTMS/TOR`, on ABAP Platform 2025 with the BOPF demo business object `/BOBF/DEMO_SALES_ORDER`, including the
-> RAP demo, and on S/4HANA 2023 FPS01 (SAP_BASIS 758) with the BOPF demo, also including the RAP demo.
+> `/SCMTMS/TOR` and the BOPF demo business object `/BOBF/DEMO_SALES_ORDER`, including the RAP demo, and on S/4HANA
+> 2023 FPS01 (SAP_BASIS 758) with the BOPF demo, also including the RAP demo.
 
 ## Clean Core level B/C
 
@@ -40,17 +40,13 @@ constants interfaces. Not classified, so level C, are only:
 ## Quick start
 
 **You need** a system with classic BOPF and [abapGit](https://abapgit.org); tested so far on SAP_BASIS 758 and 816
-(S/4HANA 2023 and 2025, and ABAP Platform 2025 for the BOPF demo).
+(S/4HANA 2023 and 2025).
 
 1. **Import the ABAP objects.** In abapGit, create an online repository with the URL of this repository in a package
    of your choice, for example the local package `$ZBFW`, and pull. Or import the zip of a
    [release](https://github.com/abat-TAO/bopf-clean-core-wrapper/releases) as an offline repository.
-2. **Generate a facade.** Run the report `ZBFW_FACADE_GENERATOR`: enter the facade class, the business object, the
-   package and, for a transportable package, a request; then select the nodes to read and to change, the
-   associations, alternative keys, actions and queries (F4 lists them). Entries are `NAME` or `NODE.NAME`, optionally
-   `= alias` as the method name. The report creates and activates the class; it replaces only classes it generated
-   itself. To change a facade, enter its name: the report loads its selection. Step by step, with two worked
-   examples: [facade generator tutorial](docs/facade-generator.md).
+2. **Generate a facade** for your business object with the report `ZBFW_FACADE_GENERATOR`, see
+   [Facade generator](#facade-generator).
 3. **Call it.** The demo facade `ZCL_BFW_DEMO_SO_FACADE` for `/BOBF/DEMO_SALES_ORDER` is part of the repository:
 
    ```abap
@@ -70,6 +66,20 @@ node tools/rename.mjs --code XY             # ZCL_BFW_ → ZCL_XY_, ZBFW_ → ZX
 The script renames the abapGit files and their contents and the documentation, and checks SAP's name length
 limits. `--map renames.json` renames single objects. Then push your copy to your own Git repository and import it
 from there, or zip it (with `.abapgit.xml` and `src/`) and import it as an offline repository.
+
+## Facade generator
+
+The report `ZBFW_FACADE_GENERATOR` writes the typed facade class for one business object. Enter the class, the
+business object and the package, and list what the facade offers: the nodes to read and to change, the associations,
+alternative keys, actions and queries, each as `NAME` or `NODE.NAME`, optionally with `= alias` as the method name.
+F4 lists the names of the business object. F8 generates and activates the class. To change a facade later, or after
+an upgrade, enter its name: the report loads its selection.
+
+![Selection screen of ZBFW_FACADE_GENERATOR with the demo facade loaded](docs/images/generator-selection-screen.png)
+
+**[Facade generator tutorial](docs/facade-generator.md):** the selection screen field by field, entries and aliases,
+which method each entry generates, two worked examples (the BOPF demo sales order and the TM transportation order),
+regenerating a facade, and every error message with its fix.
 
 ## Usage
 
@@ -94,15 +104,19 @@ with a consistency error is kept by BOPF and only reported in the messages.
 
 **Facades.** A generated facade calls the engine with the names you selected and types its methods with the
 business object's own table types: `read_<node>`, `read_<node>_<association>`, `query_<query>`,
-`execute_<action>`, `create_`, `update_` and `delete_<node>`; an alias replaces the name after the prefix. Paths are
-followed by chaining single-hop calls, e.g. the products of the items from the quick start:
+`execute_<action>`, `create_`, `update_` and `delete_<node>`; an alias replaces the name after the prefix. With the
+demo facade:
 
 ```abap
+DATA(sales_orders) = NEW zcl_bfw_demo_so_facade( ).
+DATA(orders) = sales_orders->query_select_all( maximum_rows = 10 ).
+" A path is followed by chaining single-hop calls: orders -> items -> products
+DATA(items) = sales_orders->read_items( CORRESPONDING #( orders ) ).
 DATA(products) = sales_orders->read_item_product_root( CORRESPONDING #( items ) ).
 ```
 
 **Changes and save.** Changes go into BOPF's transactional buffer; `ZCL_BFW_FACTORY=>get_transaction( )` saves or
-discards all of them:
+discards all of them. With `sales_orders` and `items` from above:
 
 ```abap
 sales_orders->update_item( EXPORTING rows        = items
@@ -120,13 +134,72 @@ ENDTRY.
 the same name, so BOPF saves in the RAP save sequence and RAP commits: `finalize`, `check_before_save`,
 `adjust_numbers` (RAP calls it only with late numbering; otherwise `save` draws the numbers), `save`, `cleanup` and
 `cleanup_finalize`. `REJECTED` goes into FAILED, the messages go into REPORTED with
-`ZCL_BFW_RAP_MESSAGE=>from_messages( )`, which keeps BOPF's texts complete. The demo `ZBFW_R_DEMOORDER` with its
-behavior pool `ZBP_BFW_R_DEMOORDER` and the console run `ZCL_BFW_RAP_DEMO_RUN` show the whole cycle.
+`ZCL_BFW_RAP_MESSAGE=>from_messages( )`, which keeps BOPF's texts complete. An excerpt of the behavior pool
+`ZBP_BFW_R_DEMOORDER` of the demo `ZBFW_R_DEMOORDER`, an unmanaged RAP business object on the demo sales order:
+
+```abap
+" Handler class lhc_order: reading for update locks the BOPF instances
+METHOD lock.
+  zcl_bfw_factory=>get_business_object( `/BOBF/DEMO_SALES_ORDER` )->read(
+    EXPORTING node        = `ROOT`
+              keys        = VALUE #( FOR requested IN keys ( key = requested-OrderKey ) )
+              for_update  = abap_true
+    IMPORTING failed_keys = DATA(failed_keys)
+              messages    = DATA(messages) ).
+  LOOP AT keys ASSIGNING FIELD-SYMBOL(<locked>).
+    IF line_exists( failed_keys[ key = <locked>-OrderKey ] ).
+      INSERT VALUE #( OrderKey    = <locked>-OrderKey
+                      %fail-cause = if_abap_behv=>cause-locked ) INTO TABLE failed-order.
+    ENDIF.
+  ENDLOOP.
+  " Same mapping as report_late below, for REPORTED EARLY
+  lcl_sales_order=>report( EXPORTING messages = messages
+                           CHANGING  reported = reported ).
+ENDMETHOD.
+
+" Saver class lsc_zbfw_r_demoorder: each phase calls the RAP transaction
+METHOD check_before_save.
+  zcl_bfw_factory=>get_rap_transaction( )->check_before_save( IMPORTING rejected = DATA(rejected)
+                                                                        messages = DATA(messages) ).
+  lcl_sales_order=>report_late( EXPORTING messages = messages
+                                CHANGING  reported = reported ).
+  IF rejected = abap_true.
+    " Root instances with an error fail; if BOPF names none, all instances changed in the transaction fail
+    lcl_sales_order=>fail_refused_save( EXPORTING messages = messages
+                                        CHANGING  failed   = failed ).
+  ENDIF.
+ENDMETHOD.
+
+METHOD save.
+  lcl_sales_order=>report_late( EXPORTING messages = zcl_bfw_factory=>get_rap_transaction( )->save( )
+                                CHANGING  reported = reported ).
+ENDMETHOD.
+
+METHOD cleanup.
+  zcl_bfw_factory=>get_rap_transaction( )->cleanup( ).
+  lcl_sales_order=>forget_changes( ).
+ENDMETHOD.
+
+" Helper class lcl_sales_order: messages of a root instance belong to the RAP instance, all others to the transaction
+METHOD report_late.
+  DATA(rap_messages) = zcl_bfw_rap_message=>from_messages( messages ).
+  LOOP AT rap_messages ASSIGNING FIELD-SYMBOL(<rap_message>).
+    IF <rap_message>-node = `ROOT` AND <rap_message>-key IS NOT INITIAL.
+      INSERT VALUE #( OrderKey = <rap_message>-key
+                      %msg     = <rap_message>-message ) INTO TABLE reported-order.
+    ELSE.
+      INSERT <rap_message>-message INTO TABLE reported-%other.
+    ENDIF.
+  ENDLOOP.
+ENDMETHOD.
+```
+
+The other handlers (create, update, delete, read), `finalize` and `cleanup_finalize` are in the demo; the console
+run `ZCL_BFW_RAP_DEMO_RUN` shows the whole cycle with EML.
 
 ## Known limitations
 
-- Tested so far only on SAP_BASIS 758 and 816 (S/4HANA 2023 and 2025, ABAP Platform 2025); older releases are not
-  tested yet.
+- Tested so far only on SAP_BASIS 758 and 816 (S/4HANA 2023 and 2025); older releases are not tested yet.
 - Tested business objects so far: the TM transportation order and the BOPF demo. Other classic BOPF business
   objects, e.g. of EHS or SAP Supplier Lifecycle Management, are not tested yet; issues and pull requests with
   findings are welcome.
@@ -140,10 +213,9 @@ behavior pool `ZBP_BFW_R_DEMOORDER` and the console run `ZCL_BFW_RAP_DEMO_RUN` s
   the query, call the engine with a standard table.
 - No path API: follow paths by chaining single-hop facade calls.
 
-## Development
+## Contributing
 
-abaplint checks the code against `abaplint.jsonc`; ABAP Unit tests run in the SAP system. Layout, checks, tests,
-demos and releases: [docs/development.md](docs/development.md).
+Issues and pull requests are welcome. Checks, tests and releases: [docs/development.md](docs/development.md).
 
 ## License
 
