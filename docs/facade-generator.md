@@ -31,7 +31,11 @@ selection and generate the class again.
 
 ## The selection screen
 
-The first block names the class and where it goes:
+![Selection screen of ZBFW_FACADE_GENERATOR with the demo facade ZCL_BFW_DEMO_SO_FACADE loaded](images/generator-selection-screen.png)
+
+The screen above shows the demo facade of [example 1](#example-1-the-bopf-demo-sales-order) after its name was
+entered: the report loaded the business object, the package and the entries; each select-option shows its first
+entry. The first block names the class and where it goes:
 
 | Field | Meaning |
 | --- | --- |
@@ -52,9 +56,15 @@ kind of entry, one entry per line:
 | **Actions** | `NODE.ACTION` | `ROOT.DELIVER` |
 | **Queries** | `NODE.QUERY` | `ROOT.SELECT_ALL` |
 
+A select-option holds any number of entries: the arrow button next to the field opens the multiple selection, one
+entry per line on the tab "Select Single Values":
+
+![Multiple selection of the select-option Associations with five entries](images/generator-multiple-selection.png)
+
 Rules for the entries:
 
-- Names are the BOPF names; upper or lower case does not matter.
+- Names are the BOPF names; upper or lower case does not matter, also for the alias (the screen may show
+  `ROOT.ITEM = ITEMS`; the method is `read_items`).
 - **Nodes of a dependent object** (text collection, attachment folder, ...) are qualified with their delegated node:
   `TEXTCOLLECTION.TEXT`. The delegated node alone, e.g. `TEXTCOLLECTION`, is the root of the dependent object. An
   association from such a node puts the association name after it: `TEXTCOLLECTION.TEXT.TEXT_CONTENT`.
