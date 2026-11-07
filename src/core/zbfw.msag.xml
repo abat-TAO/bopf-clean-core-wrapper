@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZBFW</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>BOPF wrapper</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Business object &amp;1 does not exist</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Business object &amp;1 is a RAP BO; only classic BOPF is supported</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Business object &amp;1 is CDS-based; only classic BOPF is supported</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Node &amp;1 does not exist in business object &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Node name &amp;1 is ambiguous in business object &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Association &amp;1 does not exist at node &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Alternative key &amp;1 does not exist at node &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Query &amp;1 does not exist at node &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Component &amp;1 of the row type does not exist in node &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Rows for node &amp;1 need a structured line type</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>No data type found for node &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>BOPF rejected a call to business object &amp;1; see the previous exception</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Rows for node &amp;1 need component &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Action &amp;1 does not exist at node &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>The BOPF transaction manager failed; see the previous exception</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>Save rejected; all changes of the transaction were discarded</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBFW</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>BOPF rejected the save in the RAP save phase, after all checks had passed</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

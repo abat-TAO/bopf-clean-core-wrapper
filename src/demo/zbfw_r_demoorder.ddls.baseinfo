@@ -1,0 +1,8 @@
+{
+  "BASEINFO": {
+    "FROM": [
+      "/BOBF/DM_CST_HDR",
+      "/BOBF/DM_SORD_RT"
+    ]
+  }
+}

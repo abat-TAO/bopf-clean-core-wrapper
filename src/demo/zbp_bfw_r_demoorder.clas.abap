@@ -1,0 +1,7 @@
+CLASS zbp_bfw_r_demoorder DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zbfw_r_demoorder.
+ENDCLASS.
+
+
+
+CLASS zbp_bfw_r_demoorder IMPLEMENTATION.
+ENDCLASS.

@@ -1,0 +1,12 @@
+unmanaged implementation in class zbp_bfw_r_demoorder unique;
+strict ( 2 );
+
+define behavior for ZBFW_R_DemoOrder alias Order
+lock master
+authorization master ( global )
+{
+  create;
+  update;
+  delete;
+  field ( readonly ) OrderKey;
+}

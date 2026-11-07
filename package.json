@@ -1,0 +1,8 @@
+{
+  "name": "abap-checks",
+  "private": true,
+  "description": "Code checks for the ABAP sources",
+  "devDependencies": {
+    "@abaplint/cli": "2.120.95"
+  }
+}
