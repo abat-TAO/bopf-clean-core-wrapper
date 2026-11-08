@@ -177,8 +177,8 @@ Changes stay in BOPF's buffer until `ZCL_BFW_FACTORY=>get_transaction( )->save( 
 
 ## Example 2: the TM transportation order
 
-A facade for the TM transportation order `/SCMTMS/TOR` shows the cases where an alias is needed. This selection was
-generated and used on S/4HANA 2025:
+A facade for the transportation order `/SCMTMS/TOR` of SAP Transportation Management (TM) shows the cases where an
+alias is needed. This selection was generated and used on S/4HANA 2025:
 
 | Select-option | Entries |
 | --- | --- |

@@ -4,11 +4,11 @@ A wrapper for classic BOPF business objects in ABAP. Its main purpose is to enca
 manager, the transaction manager (also the slave transaction manager of the RAP save sequence), the configuration, the
 message container and message class, and BOPF's exceptions. Application code calls the wrapper instead.
 
-Without it, code that works with classic BOPF business objects, such as the SAP TM transportation order
-`/SCMTMS/TOR`, the EHS incident `EHHSS_INCIDENT` or the supplier evaluation `/SRMSMC/BO_SEV` of SAP Supplier Lifecycle
-Management, talks to the BOPF service manager directly: node, association and action keys from constant interfaces,
-generic data references, and its own handling of messages, locks and the transaction. The wrapper hides that behind
-two parts:
+Without it, code that works with classic BOPF business objects, such as the transportation order `/SCMTMS/TOR` of SAP
+Transportation Management (TM), the incident `EHHSS_INCIDENT` of SAP Environment, Health, and Safety (EHS) or the
+supplier evaluation `/SRMSMC/BO_SEV` of SAP Supplier Lifecycle Management (SLC), talks to the BOPF service manager
+directly: node, association and action keys from constant interfaces, generic data references, and its own handling
+of messages, locks and the transaction. The wrapper hides that behind two parts:
 
 - An **engine** that works with any classic BOPF business object. Business objects, nodes, associations, actions,
   queries and alternative keys are addressed by name and resolved at runtime from the BOPF configuration, including
@@ -19,7 +19,7 @@ two parts:
 
 ![Engine and facade generator: at design time the report generates a typed facade from the BOPF configuration; at runtime your code calls the facade, the facade calls the engine, and the engine calls the BOPF APIs](docs/images/overview.svg)
 
-> **Status: v1.0.0.** Tested so far on S/4HANA 2025 FPS01 (SAP_BASIS 816) with the SAP TM transportation order
+> **Status: v1.0.0.** Tested so far on S/4HANA 2025 FPS01 (SAP_BASIS 816) with the TM transportation order
 > `/SCMTMS/TOR` and the BOPF demo business object `/BOBF/DEMO_SALES_ORDER`, including the RAP demo, and on S/4HANA
 > 2023 FPS01 (SAP_BASIS 758) with the BOPF demo, also including the RAP demo.
 
@@ -201,8 +201,7 @@ run `ZCL_BFW_RAP_DEMO_RUN` shows the whole cycle with EML.
 
 - Tested so far only on SAP_BASIS 758 and 816 (S/4HANA 2023 and 2025); older releases are not tested yet.
 - Tested business objects so far: the TM transportation order and the BOPF demo. Other classic BOPF business
-  objects, e.g. of EHS or SAP Supplier Lifecycle Management, are not tested yet; issues and pull requests with
-  findings are welcome.
+  objects, e.g. of EHS or SLC, are not tested yet; issues and pull requests with findings are welcome.
 - Callers in Standard ABAP only. ABAP for Cloud Development is not supported yet.
 - RAP: only unmanaged RAP business objects without draft.
 - A save can be refused only for business objects with a consistency group. The TM transportation order has one;
